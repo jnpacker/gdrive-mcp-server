@@ -1,4 +1,4 @@
-from unittest.mock import MagicMock, call, patch
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -49,7 +49,7 @@ def test_appends_suffix_on_collision(mock_build, mock_media, mock_creds):
     service = _make_service(existing_names=["notes.txt"], created_file=created)
     mock_build.return_value = service
 
-    result = add_document_to_folder("folder-123", "notes.txt", "hello", mock_creds)
+    add_document_to_folder("folder-123", "notes.txt", "hello", mock_creds)
 
     call_kwargs = service.files.return_value.create.call_args.kwargs
     assert call_kwargs["body"]["name"] == "notes_1.txt"
@@ -62,7 +62,7 @@ def test_increments_suffix_until_available(mock_build, mock_media, mock_creds):
     service = _make_service(existing_names=["notes.txt", "notes_1.txt"], created_file=created)
     mock_build.return_value = service
 
-    result = add_document_to_folder("folder-123", "notes.txt", "hello", mock_creds)
+    add_document_to_folder("folder-123", "notes.txt", "hello", mock_creds)
 
     call_kwargs = service.files.return_value.create.call_args.kwargs
     assert call_kwargs["body"]["name"] == "notes_2.txt"

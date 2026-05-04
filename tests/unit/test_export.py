@@ -14,7 +14,6 @@ def _make_service(mime_type: str, export_content: bytes):
     service = MagicMock()
     service.files.return_value.get.return_value.execute.return_value = {"mimeType": mime_type}
 
-    buffer_data = {"content": export_content}
 
     def fake_next_chunk():
         return None, True
@@ -24,7 +23,7 @@ def _make_service(mime_type: str, export_content: bytes):
 
     import io
 
-    real_buffer = io.BytesIO(export_content)
+    io.BytesIO(export_content)
 
     class FakeDownloader:
         def __init__(self, buf, req):
@@ -48,7 +47,6 @@ def test_google_doc_exported_as_markdown(mock_build, mock_downloader, mock_creds
     service.files.return_value.get.return_value.execute.return_value = {"mimeType": GOOGLE_DOC_MIME}
     mock_build.return_value = service
 
-    import io
     content = b"# Hello\n\nThis is markdown."
 
     def fake_init(buf, req):
