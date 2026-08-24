@@ -9,6 +9,7 @@ A Python MCP server exposing limited Google Drive capabilities as tools for AI a
 | `search_files` | Search Drive by name or full-text using a Drive query string |
 | `export_file_as_markdown` | Export a Google Doc as Markdown, or any other file as plain text |
 | `add_document_to_folder` | Upload a plain-text document to a folder; appends `_1`, `_2`, … on name collision |
+| `set_general_access` | Set a file's General access to the Red Hat domain (redhat.com) with a role of `Edit`, `Comment`, or `Read` |
 
 ## Requirements
 
@@ -68,6 +69,8 @@ gdrive-mcp-server
 ```
 
 A browser window will open asking you to sign in and grant Drive access. After you approve, a `token.json` is saved to `GOOGLE_TOKEN_FILE`. Subsequent runs load the token automatically and refresh it when it expires.
+
+> **Note:** If you have an existing `token.json` from before the `set_general_access` tool was added, delete it and re-run the auth flow — the broader `drive` scope required for managing file permissions was added and existing tokens won't have it.
 
 ## Running the server
 

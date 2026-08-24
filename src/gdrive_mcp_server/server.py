@@ -4,6 +4,7 @@ from .auth import get_credentials
 from .tools.add_document import add_document_to_folder as _add_document
 from .tools.export import export_file_as_markdown as _export
 from .tools.search import search_files as _search
+from .tools.set_access import set_general_access as _set_general_access
 
 mcp = FastMCP("gdrive-mcp-server")
 
@@ -33,6 +34,15 @@ def export_file_as_markdown(file_id: str) -> str:
 def add_document_to_folder(folder_id: str, name: str, content: str) -> dict:
     """Add a document to a Drive folder; appends _N suffix on name collision."""
     return _add_document(folder_id, name, content, _get_creds())
+
+
+@mcp.tool()
+def set_general_access(file_id: str, access: str) -> dict:
+    """Set a file's General access to the Red Hat domain (redhat.com).
+
+    access must be one of: Edit, Comment, Read.
+    """
+    return _set_general_access(file_id, access, _get_creds())
 
 
 def main():
