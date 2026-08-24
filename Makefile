@@ -8,7 +8,7 @@ export GOOGLE_TOKEN_FILE
 VENV := .venv
 PYTHON := $(VENV)/bin/python3
 
-.PHONY: help auth test test-integration install
+.PHONY: help auth test test-integration install lint lint-fix
 
 help: ## Show this help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2}'
@@ -31,3 +31,9 @@ test: install ## Run unit tests
 
 test-integration: install ## Run integration tests (requires GDRIVE_TEST_FOLDER_ID, GOOGLE_CLIENT_SECRETS_FILE, GOOGLE_TOKEN_FILE)
 	$(PYTHON) -m pytest tests/integration/ -v
+
+lint: install ## Run ruff linter
+	$(PYTHON) -m ruff check src/ tests/
+
+lint-fix: install ## Run ruff linter with auto-fix
+	$(PYTHON) -m ruff check --fix src/ tests/
