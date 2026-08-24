@@ -76,4 +76,4 @@ def test_uploads_content_as_utf8(mock_build, mock_media, mock_creds):
 
     add_document_to_folder("folder-123", "doc.txt", "héllo wörld", mock_creds)
 
-    mock_media.assert_called_once_with("héllo wörld".encode("utf-8"), mimetype="text/plain")
+    mock_media.assert_called_once_with("héllo wörld".encode(), mimetype="text/plain")
